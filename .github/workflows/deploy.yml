@@ -1,0 +1,45 @@
+  # Workflow'a bir isim verelim
+  name: Deploy Backend to Server
+
+  # Bu workflow'un ne zaman çalışacağını belirliyoruz:
+  # "main" branch'ine her kod gönderildiğinde (push) tetiklenecek.
+  # Eğer branch'inizin adı "master" ise, "main"i "master" olarak değiştirin.
+  on:
+    push:
+      branches:
+        - main
+
+  jobs:
+    deploy:
+      # Bu job'un çalışacağı sanal makine tipi
+      runs-on: ubuntu-latest
+
+      steps:
+        # 1. Adım: Repodaki kodları sanal makineye indirir.
+        - name: Checkout code
+          uses: actions/checkout@v3
+
+        # 2. Adım: Sunucuya SSH ile bağlanır ve script'i çalıştırır.
+        # Daha önce eklediğimiz sırları (secrets) burada kullanır.
+        - name: Deploy to server
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.SSH_HOST }}
+            username: ${{ secrets.SSH_USER }}
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            script: |
+              # Proje klasörüne git
+              cd ${{ secrets.PROJECT_PATH }}
+
+              # Sunucudaki kodları güncelle
+              echo ">>> Pulling latest code..."
+              git pull
+
+              # Docker imajlarını yeniden oluştur (sadece değişenler)
+              # docker-compose.yml dosyanızın bu dizinde olduğunu varsayıyoruz
+              echo ">>> Building Docker images..."
+              docker-compose build backend
+
+              # Servisleri yeni imajlarla yeniden başlat
+              echo ">>> Restarting services..."
+              docker-compose up -d --force-recreate backend
