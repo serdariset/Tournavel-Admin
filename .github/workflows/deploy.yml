@@ -28,18 +28,10 @@
             username: ${{ secrets.SSH_USER }}
             key: ${{ secrets.SSH_PRIVATE_KEY }}
             script: |
-              # Proje klasörüne git
               cd ${{ secrets.PROJECT_PATH }}
-
-              # Sunucudaki kodları güncelle
-              echo ">>> Pulling latest code..."
-              git pull
-
-              # Docker imajlarını yeniden oluştur (sadece değişenler)
-              # docker-compose.yml dosyanızın bu dizinde olduğunu varsayıyoruz
+              echo ">>> Pulling frontend code..."
+              cd ./Tournavel-Admin && git pull && cd ..
               echo ">>> Building Docker images..."
               docker-compose build frontend
-
-              # Servisleri yeni imajlarla yeniden başlat
               echo ">>> Restarting services..."
               docker-compose up -d --force-recreate frontend
