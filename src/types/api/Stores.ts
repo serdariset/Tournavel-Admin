@@ -23,6 +23,6 @@ export interface IAIStore {
 }
 
 export interface ITravelPointStore {
-  travelPoints: API.IGetTravelPointResponse[]
+  travelPoints: API.IGetTravelPointListResponse[]
   travelPoint: API.IGetTravelPointResponse | null
 }
