@@ -32,6 +32,6 @@
               echo ">>> Pulling frontend code..."
               cd ./Tournavel-Admin && git pull && cd ..
               echo ">>> Building Docker images..."
-              docker-compose build frontend
+              docker-compose build --no-cache frontend 
               echo ">>> Restarting services..."
               docker-compose up -d --force-recreate frontend
