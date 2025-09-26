@@ -6,7 +6,7 @@ import AIServices from './resource/AIServices'
 import TravelPointServices from './resource/TravelPointServices'
 
 const APIMaker = (service: string): string => {
-  return `http://localhost:3000/api/v1/${service}/`
+  return `http://159.69.1.247:3000/api/v1/${service}/`
 }
 
 export const UserAPI = {
