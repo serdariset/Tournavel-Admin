@@ -1,5 +1,5 @@
   # Workflow'a bir isim verelim
-  name: Deploy Backend to Server
+  name: Deploy Frontend to Server
 
   # Bu workflow'un ne zaman çalışacağını belirliyoruz:
   # "main" branch'ine her kod gönderildiğinde (push) tetiklenecek.
@@ -38,8 +38,8 @@
               # Docker imajlarını yeniden oluştur (sadece değişenler)
               # docker-compose.yml dosyanızın bu dizinde olduğunu varsayıyoruz
               echo ">>> Building Docker images..."
-              docker-compose build backend
+              docker-compose build frontend
 
               # Servisleri yeni imajlarla yeniden başlat
               echo ">>> Restarting services..."
-              docker-compose up -d --force-recreate backend
+              docker-compose up -d --force-recreate frontend
