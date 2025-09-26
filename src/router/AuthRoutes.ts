@@ -1,11 +1,10 @@
 import { RouteRecordRaw } from 'vue-router'
-import Login from '@/views/Auth/Login.vue'
 
 const AuthRoutes: RouteRecordRaw[] = [
   {
     name: 'login-page',
     path: '/login',
-    component: Login,
+    component: () => import('@/views/auth/Login.vue'),
     meta: {
       isMain: false,
     },
